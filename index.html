@@ -25,19 +25,23 @@
     <link rel="stylesheet" href="assets/css/select2.css">
     <link rel="stylesheet" href="assets/css/style.css">
 
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
+
 	</head>
 	<body>
   
 
     <nav class="navbar navbar-expand-lg navbar-dark probootstrap_navbar" id="probootstrap-navbar">
       <div class="container">
-        <a class="navbar-brand" href="/">预约检测</a>
+        <a class="navbar-brand" href="">预约检测</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-menu" aria-controls="probootstrap-menu" aria-expanded="false" aria-label="Toggle navigation">
           <span><i class="ion-navicon"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="probootstrap-menu">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item active"><a class="nav-link" href="index.html">首页</a></li>
           </ul>
         </div>
       </div>
@@ -51,14 +55,14 @@
         <div class="row align-items-center">
           
           <div class="col-md probootstrap-animate">
-            <form action="#" class="probootstrap-form">
+            <form action="#" class="probootstrap-form" id="reserve-form" @submit="checkForm">
               <div class="form-group">
                 <div class="row mb-3">
                   <div class="col-md">
                     <div class="form-group">
                       <label for="id_label_single"><span style="color:#F00">*</span>姓名：</label>
                       <label for="id_label_single" style="width: 100%;">
-                        <input type="text" id="" class="form-control" placeholder="" required>
+                        <input type="text" v-model="user_name" class="form-control" placeholder="" required>
                       </label>
                     </div>
                   </div>
@@ -66,7 +70,7 @@
                     <div class="form-group">
                       <label for="id_label_single"><span style="color:#F00">*</span>手机：</label>
                       <label for="id_label_single" style="width: 100%;">
-                        <input type="text" id="" class="form-control" placeholder="" required>
+                        <input type="text" v-model="mobile" class="form-control" placeholder="" required>
                       </label>
                     </div>
                   </div>
@@ -77,7 +81,7 @@
                     <div class="form-group">
                       <label for="id_label_single"><span style="color:#F00">*</span>客户名称：</label>
                       <label for="id_label_single" style="width: 100%;">
-                        <input type="text" id="" class="form-control" placeholder="" required>
+                        <input type="text" v-model="company_name" class="form-control" placeholder="" required>
                       </label>
                     </div>
                   </div>
@@ -88,7 +92,7 @@
                     <div class="form-group">
                       <label for="id_label_single"><span style="color:#F00">*</span>所在地区：</label>
                       <label for="id_label_single" style="width: 100%;">
-                        <input type="text" id="" class="form-control" placeholder="">
+                        <input type="text" v-model="province_city" class="form-control" placeholder="">
                       </label>
                     </div>
                   </div>
@@ -99,7 +103,7 @@
                     <div class="form-group">
                       <label for="id_label_single"><span style="color:#F00">*</span>详细地址：</label>
                       <label for="id_label_single" style="width: 100%;">
-                        <input type="text" id="" class="form-control" placeholder="">
+                        <input type="text" v-model="address_detail" class="form-control" placeholder="">
                       </label>
                     </div>
                   </div>
@@ -110,9 +114,9 @@
                     <div class="form-group">
                       <label for="id_label_single"><span style="color:#F00">*</span>手机验证码：</label>
                       <label for="id_label_single" style="width: 100%;">
-                        <input type="text" id="" class="form-control" placeholder="" required>
+                        <input type="text" v-model="vcode" class="form-control" placeholder="" required>
                       </label>
-                      <label for="id_label_single"><input type="submit" value="获取验证码" class="btn btn-primary btn-block"></label>
+                      <label for="id_label_single"><input type="button" v-on:click="getVCode" value="获取验证码" class="btn btn-primary btn-block"></label>
                     </div>
                   </div>
                 </div>
@@ -122,7 +126,7 @@
                     <div class="form-group">
                       <label for="id_label_single"><span style="color:#F00">*</span>样品名称：</label>
                       <label for="id_label_single" style="width: 100%;">
-                        <input type="text" id="" class="form-control" placeholder="" required>
+                        <input type="text" v-model="sample_name" class="form-control" placeholder="" required>
                       </label>
                     </div>
                   </div>
@@ -130,7 +134,7 @@
                     <div class="form-group">
                       <label for="id_label_single"><span style="color:#F00">*</span>样品件数：</label>
                       <label for="id_label_single" style="width: 100%;">
-                        <input type="text" id="" class="form-control" placeholder="" required>
+                        <input type="text" v-model="sample_amount" class="form-control" placeholder="" required>
                       </label>
                     </div>
                   </div>
@@ -141,7 +145,7 @@
                     <div class="form-group">
                       <label for="id_label_single">样品描述：</label>
                       <label for="id_label_single" style="width: 100%;">
-                        <textarea rows="3" class="form-control" placeholder="请写明样品名称、样品件数和样品状态"></textarea>
+                        <textarea rows="3" class="form-control" v-model="sample_description" placeholder="请写明样品名称、样品件数和样品状态"></textarea>
                       </label>
                     </div>
                   </div>
@@ -152,7 +156,7 @@
                     <div class="form-group">
                       <label for="id_label_single">备注：</label>
                       <label for="id_label_single" style="width: 100%;">
-                        <textarea rows="3" class="form-control" placeholder="请填写备注信息，限200字"></textarea>
+                        <textarea rows="3" class="form-control" v-model="special_note" placeholder="请填写备注信息，限200字"></textarea>
                       </label>
                     </div>
                   </div>
@@ -163,7 +167,7 @@
                     <div class="form-group">
                       <label for="id_label_single">预约类型：</label>
                       <label for="id_label_single" style="width: 100%;">
-                        <select class="js-example-basic-single js-states form-control" style="width: 100%;">
+                        <select class="js-example-basic-single js-states form-control" v-model="order_type" style="width: 100%;">
                           <option value="Australia">上门取货</option>
                           <option value="Japan">预约送检</option>
                           <option value="United States">预约取样</option>
@@ -179,7 +183,7 @@
                       <label for="probootstrap-date-departure">上门日期</label>
                       <div class="probootstrap-date-wrap">
                         <span class="icon ion-calendar"></span> 
-                        <input type="text" id="probootstrap-date-departure" class="form-control" placeholder="" readonly>
+                        <input type="text" id="probootstrap-date-departure" class="form-control" v-model="order_date" placeholder="" readonly>
                       </div>
                     </div>
                   </div>
@@ -188,7 +192,7 @@
                       <label for="probootstrap-date-arrival">上门时间</label>
                       <div class="probootstrap-date-wrap">
                         <span class="icon ion-calendar"></span> 
-                        <select class="js-example-basic-single js-states form-control" id="id_label_single" style="width: 100%;">
+                        <select class="js-example-basic-single js-states form-control" id="id_label_single" v-model="order_time" style="width: 100%;">
                           <option value="">8:00</option>
                           <option value="">9:00</option>
                           <option value="">10:00</option>
@@ -229,8 +233,6 @@
         </div>
       </div>
     </footer>
-    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="assets/js/vue/reserve.js"></script>
     
     <script src="assets/js/jquery.min.js"></script>

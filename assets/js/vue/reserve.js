@@ -7,23 +7,22 @@ const app = new Vue({
   el: '#reserve-form',
   data: {
     errors: [],
-    user_name: null,
-    mobile: null,
-    company_name: null,
-    province_city: null,
-    address_detail: null,
-    vcode: null,
-    sample_name: null,
-    sample_amount: null,
-    sample_description: null,
-    special_note: null,
-    order_type: null,
-    order_date: null,
-    order_time: null,
+    user_name: "苏行",
+    mobile: "13321179308",
+    company_name: "Leon",
+    province_city: "北京",
+    address_detail: "王府花园",
+    vcode: "8249",
+    sample_name: "钻石",
+    sample_amount: "200",
+    sample_description: "非常好的",
+    special_note: "无",
+    order_type: "1",
+    order_date: "2019-04-03",
+    order_time: "8:00",
   },
   methods: {
     checkForm: function (e) {
-      e.preventDefault();
       var params = new URLSearchParams();
       params.append('user_name', this.user_name);
       params.append('mobile', this.mobile);
@@ -37,18 +36,20 @@ const app = new Vue({
       params.append('sample_description', this.sample_description);
       params.append('special_note', this.special_note);
       params.append('order_type', this.order_type);
-      params.append('order_date', this.order_date);
-      params.append('order_time', this.order_time);
+      params.append('order_time', this.order_date + " " + this.order_time);
 
       this.$http.post(
         'http://reserveapi.iyouhi.com/reserve/add_order',
         params
       ).then(function (response) {
-        console.log(response)
+        if (response.data.code == 10000) {
+          alert(response.data.message);
+        } else {
+          alert(response.data.message);
+        }
       }).catch(function (error) {
            
       })
-      alert("Done");
       return false;
     },
     //获取验证码
@@ -59,11 +60,15 @@ const app = new Vue({
         'http://reserveapi.iyouhi.com/verify/send_verify_code?phone='+this.mobile,
         params
       ).then(function (response) {
-        console.log(response)
+        if (response.data.code == 10000) {
+          alert("验证码已经发送");
+        } else {
+          alert("验证码发送失败");
+        }
       }).catch(function (error) {
            
       })
-      alert("DoneDone" + this.mobile);
+      
       return false;
     }
 

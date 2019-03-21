@@ -167,10 +167,10 @@
                     <div class="form-group">
                       <label for="id_label_single">预约类型：</label>
                       <label for="id_label_single" style="width: 100%;">
-                        <select class="js-example-basic-single js-states form-control" v-model="order_type" style="width: 100%;">
-                          <option value="Australia">上门取货</option>
-                          <option value="Japan">预约送检</option>
-                          <option value="United States">预约取样</option>
+                        <select class="js-states form-control" v-model="order_type" style="width: 100%;">
+                          <option value="1">上门取货</option>
+                          <option value="2">预约送检</option>
+                          <option value="3">预约取样</option>
                         </select>
                       </label>
                     </div>
@@ -191,19 +191,13 @@
                     <div class="form-group">
                       <label for="probootstrap-date-arrival">上门时间</label>
                       <div class="probootstrap-date-wrap">
-                        <span class="icon ion-calendar"></span> 
-                        <select class="js-example-basic-single js-states form-control" id="id_label_single" v-model="order_time" style="width: 100%;">
-                          <option value="">8:00</option>
-                          <option value="">9:00</option>
-                          <option value="">10:00</option>
-                          <option value="">11:00</option>
-                          <option value="">12:00</option>
-                          <option value="">13:00</option>
-                          <option value="">14:00</option>
-                          <option value="">15:00</option>
-                          <option value="">16:00</option>
-                          <option value="">17:00</option>
-                          <option value="">18:00</option>
+                        <select class="js-states form-control" id="id_label_single" v-model="order_time" style="width: 100%;">
+                          <option value="8:00" selected>8:00</option>
+                          <option value="9:00">9:00</option>
+                          <option value="10:00">10:00</option>
+                          <option value="11:00">11:00</option>
+                          <option value="12:00">12:00</option>
+                          
                         </select>
                       </div>
                     </div>

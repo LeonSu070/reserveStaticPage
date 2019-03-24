@@ -28,6 +28,8 @@
     <!-- 开发环境版本，包含了有帮助的命令行警告 -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
+    <script src="assets/js/vue/v-distpicker.js"></script>
+    <script src="https://unpkg.com/vuejs-datepicker"></script>
 
 	</head>
 	<body>
@@ -55,7 +57,7 @@
         <div class="row align-items-center">
           
           <div class="col-md probootstrap-animate">
-            <form action="#" class="probootstrap-form" id="reserve-form" @submit="checkForm">
+            <form action="javascript:return false;" class="probootstrap-form" id="reserve-form" @submit="checkForm">
               <div class="form-group">
                 <div class="row mb-3">
                   <div class="col-md">
@@ -91,8 +93,10 @@
                   <div class="col-md">
                     <div class="form-group">
                       <label><span style="color:#F00">*</span>所在地区：</label>
-                      <label style="width: 100%;">
-                        <input type="text" v-model="province_city" class="form-control" placeholder="">
+                      <label  style="width: 100%;">
+                        <template>
+                          <v-distpicker @selected="areaSelected"></v-distpicker>
+                        </template>
                       </label>
                     </div>
                   </div>
@@ -185,6 +189,7 @@
                         <span class="icon ion-calendar"></span> 
                         <input type="text" id="probootstrap-date-departure" class="form-control" v-model="order_date" placeholder="" readonly>
                       </div>
+                      <label>{{order_date}}</label>
                     </div>
                   </div>
                   <div class="col-md">

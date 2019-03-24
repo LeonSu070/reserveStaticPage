@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<title></title>
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="assets/js/vue/v-distpicker.js"></script>
+
+	</head>
+	<body>
+<template>
+    <button  @click="choose">点我选择区域</button>
+    <div class="divwrap" v-if="show">
+        <v-distpicker type="mobile" @province="onChangeProvince" @city="onChangeCity" @area="onChangeArea"></v-distpicker>
+    </div>
+</template>
+ 
+在你引用 v-distpicker 的父组件里面定义几个方法来获取选择的值。
+ 
+<script>
+    import VDistpicker from 'v-distpicker'
+    export default {
+        name: 'getAddress',
+        components: { VDistpicker },
+        data() {
+            return {
+                show:false,
+            }
+        },
+        methods: {
+            choose(){
+                this.show=!this.show
+            },
+            onChangeProvince(a){
+                console.log(a)                
+            },
+            onChangeCity(a){
+                console.log(a)                
+            },
+            onChangeArea(a){
+                console.log(a)    
+                this.show=false
+            }            
+        },
+}
+
+	</body>
+</html>

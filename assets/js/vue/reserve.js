@@ -39,6 +39,7 @@ const app = new Vue({
       var params = new URLSearchParams();
       params.append('user_name', this.user_name);
       params.append('mobile', this.mobile);
+      params.append('id_number', this.id_number);
       params.append('company_name', this.company_name);
       params.append('province', this.province);
       params.append('city', this.city);

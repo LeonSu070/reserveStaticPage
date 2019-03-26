@@ -15,6 +15,7 @@ const app = new Vue({
     errors: [],
     user_name: "苏行",
     mobile: "13321179308",
+    id_number: "13456378290192873X",
     company_name: "Leon",
     province: "省",
     city: "市",

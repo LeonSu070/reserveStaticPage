@@ -36,6 +36,17 @@ const app = new Vue({
         alert("请将所在地区补充完整");
         return false;
       }
+
+      if (this.id_number && (!(/\d{17}[\d|x]|\d{15}/).test(this.id_number) || (this.id_number.length !== 15 && this.id_number.length !== 18))) {
+        alert('请填写正确的身份证号');
+        return false;
+      } 
+
+      if (this.mobile && (!(/^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/).test(this.mobile))) {
+        alert('请填写正确的手机号');
+        return false;
+      }
+
       var params = new URLSearchParams();
       params.append('user_name', this.user_name);
       params.append('mobile', this.mobile);

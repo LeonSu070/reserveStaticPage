@@ -125,7 +125,7 @@
                       <label style="width: 100%;">
                         <input type="text" v-model="vcode" class="form-control" placeholder="" required>
                       </label>
-                      <label><input type="button" v-on:click="getVCode" value="获取验证码" class="btn btn-primary btn-block"></label>
+                      <label><button type="button" v-on:click="getVCode" class="btn btn-primary btn-block" v-bind:disabled="btndisabled">{{ vcodebutton }}</button></label>
                     </div>
                   </div>
                 </div>
@@ -179,7 +179,6 @@
                         <select class="js-states form-control" v-model="order_type" style="width: 100%;">
                           <option value="1">上门取货</option>
                           <option value="2">预约送检</option>
-                          <option value="3">预约取样</option>
                         </select>
                       </label>
                     </div>

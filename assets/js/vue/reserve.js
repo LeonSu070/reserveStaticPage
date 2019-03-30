@@ -28,6 +28,10 @@ const app = new Vue({
     order_type: "1",
     order_date: "2019-04-09",
     order_time: "8:00",
+
+    totalTime: 60,
+    vcodebutton: "获取验证码",
+    btndisabled: false,
   },
   methods: {
     checkForm: function (e) {
@@ -50,7 +54,7 @@ const app = new Vue({
         alert('样品件数必须大于0');
         return false;
       }
-      
+
       var params = new URLSearchParams();
       params.append('user_name', this.user_name);
       params.append('mobile', this.mobile);
@@ -83,7 +87,8 @@ const app = new Vue({
       return false;
     },
     //获取验证码
-    getVCode: function (e) {
+    getVCode: function (e) { 
+      this.btndisabled = true;
       var params = new URLSearchParams();
       params.append('mobile', this.mobile);
       this.$http.post(
@@ -91,15 +96,32 @@ const app = new Vue({
         params
       ).then(function (response) {
         if (response.data.code == 10000) {
+          app.cuntdown();
           alert("验证码已经发送");
         } else {
+          app.btndisabled = false;
           alert("验证码发送失败");
         }
       }).catch(function (error) {
-           
+          app.btndisabled = false;
       })
-      
+
       return false;
+    },
+    cuntdown: function () {
+      //倒计时
+      this.vcodebutton = this.totalTime + 's后重新发送' //这里解决60秒不见了的问题
+      this.btndisabled = true
+      let clock = window.setInterval(() => {
+        this.totalTime--
+        this.vcodebutton = this.totalTime + 's后重新发送'
+        if (this.totalTime < 0) {     //当倒计时小于0时清除定时器
+          window.clearInterval(clock)
+          this.vcodebutton = '重新发送验证码'
+          this.totalTime = 60
+          this.btndisabled = false
+        }
+      },1000)
     },
     //地区选择
     areaSelected(data) {
@@ -109,7 +131,7 @@ const app = new Vue({
     },
     updateDateValue: function (e) {
       this.order_date = $("#probootstrap-date-departure").val();
-    }
+    },
 
   }
 })

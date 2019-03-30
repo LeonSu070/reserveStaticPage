@@ -8,7 +8,6 @@ Vue.prototype.$http = axios
 const app = new Vue({
   el: '#reserve-form',
   components: {
-      vuejsDatepicker,
       VDistpicker
   },
   data: {
@@ -47,6 +46,11 @@ const app = new Vue({
         return false;
       }
 
+      if (this.sample_amount<=0) {
+        alert('样品件数必须大于0');
+        return false;
+      }
+      
       var params = new URLSearchParams();
       params.append('user_name', this.user_name);
       params.append('mobile', this.mobile);
@@ -110,7 +114,7 @@ const app = new Vue({
   }
 })
 
-
+//定时更新日期值，临时解决方案
 function intervalUpdateDateValue(){
   app.updateDateValue();
 }

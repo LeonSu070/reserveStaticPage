@@ -74,7 +74,7 @@ const app = new Vue({
       params.append('order_time', this.order_date + " " + this.order_time);
 
       this.$http.post(
-        'http://reserveapi.iyouhi.com/reserve/add_order',
+        'http://reserveapi.aiyohey.com/reserve/add_order',
         params
       ).then(function (response) {
         if (response.data.code == 10000) {
@@ -93,7 +93,7 @@ const app = new Vue({
       var params = new URLSearchParams();
       params.append('mobile', this.mobile);
       this.$http.post(
-        'http://reserveapi.iyouhi.com/verify/send_verify_code?phone='+this.mobile,
+        'http://reserveapi.aiyohey.com/verify/send_verify_code?phone='+this.mobile,
         params
       ).then(function (response) {
         if (response.data.code == 10000) {

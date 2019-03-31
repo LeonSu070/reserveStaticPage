@@ -35,6 +35,7 @@ const app = new Vue({
   },
   methods: {
     checkForm: function (e) {
+      e.preventDefault();
       if (this.province == "省" || this.city == "市" || this.area == "区") {
         alert("请将所在地区补充完整");
         return false;

@@ -27,7 +27,7 @@ const app = new Vue({
     special_note: "无",
     order_type: "1",
     order_date: "2019-04-09",
-    order_time: "8:00",
+    order_time: "09:00",
 
     totalTime: 60,
     vcodebutton: "获取验证码",
@@ -131,7 +131,7 @@ const app = new Vue({
       this.area = data.area.value;
     },
     updateDateValue: function (e) {
-      this.order_date = $("#probootstrap-date-departure").val();
+      this.order_date = $("#probootstrap-date").val();
     },
 
   }

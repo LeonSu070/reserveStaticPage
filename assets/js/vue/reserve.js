@@ -13,6 +13,7 @@ const app = new Vue({
   data: {
     errors: [],
     user_name: "苏行",
+    memberid: "",
     mobile: "13321179308",
     id_number: "13456378290192873X",
     company_name: "Leon",
@@ -58,6 +59,7 @@ const app = new Vue({
 
       var params = new URLSearchParams();
       params.append('user_name', this.user_name);
+      params.append('memberid', this.memberid);
       params.append('mobile', this.mobile);
       params.append('id_number', this.id_number);
       params.append('company_name', this.company_name);

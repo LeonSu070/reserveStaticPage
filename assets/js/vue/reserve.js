@@ -2,7 +2,7 @@ axios.defaults.timeout = 5000;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.auth = {username: 'website',password: '8Ukd34KLSws'}
 Vue.prototype.$http = axios
-Vue.prototype.$domain = "http://reserveapi.iyouhi.com"
+Vue.prototype.$domain = "http://reserveapi.aiyohey.com"
 //Vue.component('v-distpicker', VDistpicker);
 
 
@@ -93,6 +93,8 @@ const app = new Vue({
       ).then(function (response) {
         if (response.data.code == 10000) {
           alert(response.data.message);
+          //刷新页面
+          location.reload();
         } else {
           alert(response.data.message);
         }

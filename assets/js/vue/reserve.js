@@ -2,6 +2,7 @@ axios.defaults.timeout = 5000;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.auth = {username: 'website',password: '8Ukd34KLSws'}
 Vue.prototype.$http = axios
+Vue.prototype.$domain = "http://reserveapi.iyouhi.com"
 //Vue.component('v-distpicker', VDistpicker);
 
 
@@ -27,13 +28,15 @@ const app = new Vue({
     sample_description: "非常好的",
     special_note: "无",
     order_type: "1",
-    order_date: "2019-04-09",
+    order_date: "",
     order_time: "09:00",
 
     totalTime: 60,
     vcodebutton: "获取验证码",
     btndisabled: false,
+    options: [],
   },
+
   methods: {
     checkForm: function (e) {
       e.preventDefault();
@@ -57,6 +60,15 @@ const app = new Vue({
         return false;
       }
 
+      if (!this.order_date) {
+        alert('请选择日期');
+        return false;
+      }
+      if (!this.order_time) {
+        alert('请选择时间');
+        return false;
+      }
+
       var params = new URLSearchParams();
       params.append('user_name', this.user_name);
       params.append('memberid', this.memberid);
@@ -76,7 +88,7 @@ const app = new Vue({
       params.append('order_time', this.order_date + " " + this.order_time);
 
       this.$http.post(
-        'http://reserveapi.aiyohey.com/reserve/add_order',
+        this.$domain + '/reserve/add_order',
         params
       ).then(function (response) {
         if (response.data.code == 10000) {
@@ -95,7 +107,7 @@ const app = new Vue({
       var params = new URLSearchParams();
       params.append('mobile', this.mobile);
       this.$http.post(
-        'http://reserveapi.aiyohey.com/verify/send_verify_code?phone='+this.mobile,
+        this.$domain + '/verify/send_verify_code?phone='+this.mobile,
         params
       ).then(function (response) {
         if (response.data.code == 10000) {
@@ -132,15 +144,37 @@ const app = new Vue({
       this.city = data.city.value;
       this.area = data.area.value;
     },
-    updateDateValue: function (e) {
-      this.order_date = $("#probootstrap-date").val();
+
+    checkTime: function (v) {
+      //防止选日期时三次调用这里
+      if ($("#probootstrap-date").val() != this.order_date || v) {
+        this.order_date = $("#probootstrap-date").val();
+        this.getTime()
+      }
+    },
+
+    getTime: function() {
+      var params = new URLSearchParams();
+      params.append('order_date', this.order_date);
+      params.append('order_type', this.order_type);
+      
+      this.$http.post(
+        this.$domain + '/reserve/get_time',
+        params
+      ).then(function (response) {
+        if (response.data.code == 10000) {  
+          app.options = response.data.data;
+        } else {
+          alert(response.data.message);
+          
+        }
+      }).catch(function (error) {
+           
+      })
     },
 
   }
 })
+//获取可预约时间
+app.getTime();
 
-//定时更新日期值，临时解决方案
-function intervalUpdateDateValue(){
-  app.updateDateValue();
-}
-setInterval(intervalUpdateDateValue,1000);

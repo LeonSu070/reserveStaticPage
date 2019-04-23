@@ -112,7 +112,7 @@
                     <div class="form-group">
                       <label><span style="color:#F00">*</span>所在地区：</label>
                         <template>
-                          <v-distpicker @selected="areaSelected"></v-distpicker>
+                          <v-distpicker province="北京市" city="北京城区" area="朝阳区" @selected="areaSelected"></v-distpicker>
                         </template>
                     </div>
                   </div>
@@ -152,7 +152,7 @@
                 <div class="row mb-3">
                   <div class="col-md">
                     <div class="form-group">
-                      <label><span style="color:#F00">*</span>样品描述：</label>
+                      <label>样品描述：</label>
                       <label style="width: 100%;">
                         <textarea rows="3" class="form-control" v-model="sample_description" placeholder="请写明样品名称、样品件数和样品状态"></textarea>
                       </label>
@@ -177,7 +177,7 @@
                       <label><span style="color:#F00">*</span>预约日期：</label>
                       <div class="probootstrap-date-wrap">
                         <span class="icon ion-calendar"></span> 
-                        <input type="text" id="probootstrap-date" class="form-control" v-model="order_date" onchange="app.checkTime(0)" placeholder="" data-date-start-date="+2d" data-date-end-date="+7d" readonly >
+                        <input type="text" id="probootstrap-date" class="form-control" v-model="order_date" onchange="app.checkTime(0)" placeholder="" data-date-start-date="+0d" data-date-end-date="+2d" readonly >
                       </div>
                     </div>
                   </div>

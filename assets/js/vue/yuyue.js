@@ -41,27 +41,40 @@ const app = new Vue({
     checkForm: function (e) {
       e.preventDefault();
 
-      if (this.id_number && (!(/\d{17}[\d|x]|\d{15}/).test(this.id_number) || (this.id_number.length !== 15 && this.id_number.length !== 18))) {
+      if (!this.user_name) {
+        alert('请填写姓名');
+        return false;
+      }
+      if (this.province == "省" || this.city == "市" || this.area == "区") {
+        alert("请将所在地区补充完整");
+        return false;
+      }
+      if (!this.id_number || (!(/\d{17}[\d|x]|\d{15}/).test(this.id_number) || (this.id_number.length !== 15 && this.id_number.length !== 18))) {
         alert('请填写正确的身份证号');
         return false;
       } 
-
-      if (this.mobile && (!(/^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/).test(this.mobile))) {
+      if (!this.mobile || (!(/^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/).test(this.mobile))) {
         alert('请填写正确的手机号');
         return false;
       }
-
       if (this.sample_amount<=0) {
         alert('样品件数必须大于0');
         return false;
       }
-
+      if (!this.sample_description) {
+        alert('请填写样品描述');
+        return false;
+      }
       if (!this.order_date) {
         alert('请选择日期');
         return false;
       }
       if (!this.order_time) {
         alert('请选择时间');
+        return false;
+      }
+      if (this.order_time == "今日预约已满") {
+        alert(this.order_time);
         return false;
       }
 

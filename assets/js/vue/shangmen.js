@@ -29,7 +29,7 @@ const app = new Vue({
     special_note: "",
     order_type: "1",
     order_date: "",
-    order_time: "09:00",
+    order_time: "",
 
     totalTime: 60,
     vcodebutton: "获取验证码",
@@ -39,16 +39,23 @@ const app = new Vue({
 
   methods: {
     checkForm: function (e) {
-      e.preventDefault();
+      if (!this.user_name) {
+        alert('请填写姓名');
+        return false;
+      }
+      if (!this.address_detail) {
+        alert('请填写详细地址');
+        return false;
+      }
       if (this.province == "省" || this.city == "市" || this.area == "区") {
         alert("请将所在地区补充完整");
         return false;
       }
-      if (this.id_number && (!(/\d{17}[\d|x]|\d{15}/).test(this.id_number) || (this.id_number.length !== 15 && this.id_number.length !== 18))) {
+      if (!this.id_number || (!(/\d{17}[\d|x]|\d{15}/).test(this.id_number) || (this.id_number.length !== 15 && this.id_number.length !== 18))) {
         alert('请填写正确的身份证号');
         return false;
       } 
-      if (this.mobile && (!(/^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/).test(this.mobile))) {
+      if (!this.mobile || (!(/^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/).test(this.mobile))) {
         alert('请填写正确的手机号');
         return false;
       }

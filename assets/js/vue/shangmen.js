@@ -29,7 +29,7 @@ const app = new Vue({
     special_note: "",
     order_type: "1",
     order_date: "",
-    order_time: "",
+    order_time: "0",
 
     totalTime: 60,
     vcodebutton: "获取验证码",

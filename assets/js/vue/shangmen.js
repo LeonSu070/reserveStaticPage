@@ -177,7 +177,6 @@ const app = new Vue({
       ).then(function (response) {
         if (response.data.code == 10000) {  
           app.options = response.data.data;
-          app.order_time = response.data.default;
         } else {
           alert(response.data.message);
           

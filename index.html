@@ -186,7 +186,7 @@
                       <label><span style="color:#F00">*</span>预约时间：</label>
                       <div class="probootstrap-date-wrap">
                         <select class="js-states form-control" v-model="order_time" style="width: 100%;">
-                          
+                          <option disabled value="">请选择</option>
                           <option v-for="option in options" v-bind:value="option.value">
                             {{ option.text }}
                           </option>
